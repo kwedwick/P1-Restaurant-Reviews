@@ -10,34 +10,34 @@ using P1RestaurantReviewer.DataAccess.Entities;
 
 namespace P1RestaurantReviewer.DataAccess
 {
-    public class RestaurantsRepo : IRestaurantsRepo
+    public class RestaurantRepo : IRestaurantRepo
     {
         private restaurantreviewerContext _context;
 
-        public RestaurantsRepo(restaurantreviewerContext context)
+        public RestaurantRepo(restaurantreviewerContext context)
         {
             _context = context;
         }
 
-        public List<Domain.Restaurants> GetAllRestaurants()
+        public List<Domain.Restaurant> GetAllRestaurants()
         {
             return _context.Restaurants.Select(
-                restaurant => new Domain.Restaurants(restaurant.Id, restaurant.Name, restaurant.Location, (int)restaurant.Zipcode)
+                restaurant => new Domain.Restaurant(restaurant.Id, restaurant.Name, restaurant.Location, (int)restaurant.Zipcode)
             ).ToList();
         }
 
-        public Domain.Restaurants GetRestaurantByName(string name)
+        public Domain.Restaurant GetRestaurantByName(string name)
         {
             Entities.Restaurant foundRestaurant = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == name);
 
             if (foundRestaurant != null)
             {
-                return new Domain.Restaurants(foundRestaurant.Id, foundRestaurant.Name, foundRestaurant.Location, (int)foundRestaurant.Zipcode);
+                return new Domain.Restaurant(foundRestaurant.Id, foundRestaurant.Name, foundRestaurant.Location, (int)foundRestaurant.Zipcode);
             }
-            return new Domain.Restaurants();
+            return new Domain.Restaurant();
         }
 
-        public Domain.Restaurants CreateRestaurant(Domain.Restaurants restaurant)
+        public Domain.Restaurant CreateRestaurant(Domain.Restaurant restaurant)
         {
             var newEntity = new Entities.Restaurant
             {

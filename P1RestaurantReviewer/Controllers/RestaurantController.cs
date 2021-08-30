@@ -11,9 +11,9 @@ namespace P1RestaurantReviewer.Controllers
     public class RestaurantController : Controller
     {
         // GET: RestaurantController
-        private readonly IRestaurantsRepo _repo;
+        private readonly IRestaurantRepo _repo;
 
-        public RestaurantController(IRestaurantsRepo repo)
+        public RestaurantController(IRestaurantRepo repo)
         {
             _repo = repo;
         }

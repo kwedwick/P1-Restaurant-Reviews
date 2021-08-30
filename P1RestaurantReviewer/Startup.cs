@@ -28,7 +28,9 @@ namespace P1RestaurantReviewer
         public void ConfigureServices(IServiceCollection services)
         {
             // the repos
-            services.AddScoped<IRestaurantsRepo, RestaurantsRepo>();
+            //unit of work pattern
+            services.AddScoped<IRestaurantRepo, RestaurantRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
             // need to add connection string to get database:
 
             services.AddDbContext<restaurantreviewerContext>(options =>
