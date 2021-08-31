@@ -31,6 +31,7 @@ namespace P1RestaurantReviewer
             //unit of work pattern
             services.AddScoped<IRestaurantRepo, RestaurantRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IReviewRepo, ReviewRepo>();
             // need to add connection string to get database:
 
             services.AddDbContext<restaurantreviewerContext>(options =>

@@ -10,21 +10,36 @@ namespace P1RestaurantReviewer.Domain
     {
         public Review() { }
 
-        public Review(int id, string title, string body, int rating)
+        public Review(int id, DateTime dateTime, string title, string body, int rating)
         {
             Id = id;
-            TimeCreated = DateTime.Now;
+            TimeCreated = dateTime;
             Title = title;
             Body = body;
             Rating = rating;
+
         }
 
-        public Review(string title, string body, int rating, Restaurant restaurantDetails) : this()
+        public Review(int id, string title, string body, int rating, string username, string restaurantName) : this()
         {
+            Id = id;
             Title = title;
             Body = body;
             Rating = rating;
-            RestaurantDetails = restaurantDetails;
+            Username = Username;
+            RestaurantName = restaurantName;
+        }
+
+        public Review(int id, string title, string body, int rating, int userId, int restaurantId, string username, string restaurantName) : this()
+        {
+            Id = id;
+            Title = title;
+            Body = body;
+            Rating = rating;
+            UserId = userId;
+            RestaurantId = restaurantId;
+            Username = Username;
+            RestaurantName = restaurantName;
         }
         public int Id { get; set; }
 
@@ -33,6 +48,10 @@ namespace P1RestaurantReviewer.Domain
         public string Body { get; set; }
         public int Rating { get; set; }
 
-        public Restaurant RestaurantDetails { get; set; }
+        public int RestaurantId { get; set; }
+        public int UserId { get; set; }
+        public string Username { get; set; }
+
+        public string RestaurantName { get; set; }
     }
 }
