@@ -12,6 +12,7 @@ using P1RestaurantReviewer.Data;
 using P1RestaurantReviewer.DataAccess;
 using P1RestaurantReviewer.DataAccess.Entities;
 using P1RestaurantReviewer.Domain;
+using P1RestaurantReviewer.Models.Configuration;
 using P1RestaurantReviewer.Services;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,10 @@ namespace P1RestaurantReviewer
             services.AddScoped<IRestaurantRepo, RestaurantRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IReviewRepo, ReviewRepo>();
+
+            //GoogleSMPT authorization
+            services.Configure<GoogleSMTPDetails>(Configuration.GetSection("GoogleSMTP"));
+
             // need to add connection string to get database:
             services.AddDbContext<restaurantreviewerContext>(options =>
             {
