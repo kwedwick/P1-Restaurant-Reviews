@@ -64,6 +64,7 @@ namespace P1RestaurantReviewer
 
             services.AddTransient<IEmailSender, EmailSender>();
 
+            services.AddRazorPages();
             services.AddControllersWithViews();
         }
 
