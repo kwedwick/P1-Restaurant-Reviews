@@ -10,10 +10,10 @@ namespace P1RestaurantReviewer.DataAccess.Entities
         public int Id { get; set; }
         public int ReviewId { get; set; }
         public int RestaurantId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public virtual Restaurant Restaurant { get; set; }
         public virtual Review Review { get; set; }
-        public virtual User User { get; set; }
+        public virtual AspNetUser User { get; set; }
     }
 }

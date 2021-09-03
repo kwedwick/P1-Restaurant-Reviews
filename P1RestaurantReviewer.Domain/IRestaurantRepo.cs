@@ -13,6 +13,8 @@ namespace P1RestaurantReviewer.Domain
             Restaurant GetRestaurantByName(string name);
 
             Restaurant CreateRestaurant(Restaurant restaurant);
+
+            Restaurant UpdateRestaurant(Restaurant restaurant);
         }
 }
 

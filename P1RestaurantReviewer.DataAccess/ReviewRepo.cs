@@ -72,7 +72,7 @@ namespace P1RestaurantReviewer.DataAccess
                 }
             )
             .Join(
-                _context.Users,
+                _context.AspNetUsers,
                 reviewJoin => reviewJoin.UserId,
                 userJoin => userJoin.Id,
                 (reviewJoin, userJoin) => new Domain.Review
@@ -81,7 +81,7 @@ namespace P1RestaurantReviewer.DataAccess
                     Title = reviewJoin.Title,
                     Body = reviewJoin.Body,
                     Rating = reviewJoin.Rating,
-                    Username = userJoin.Username
+                    Username = userJoin.UserName
                 }
             )
             .ToList();
@@ -98,7 +98,7 @@ namespace P1RestaurantReviewer.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Domain.Review> GetMyReviews(int id)
+        public List<Domain.Review> GetMyReviews(string id)
         {
             List<Domain.Review> restuarantReviews = _context.ReviewJoins
            .Where(userReviews => userReviews.UserId == id)
@@ -135,6 +135,19 @@ namespace P1RestaurantReviewer.DataAccess
                 return restuarantReviews;
             }
             return new List<Domain.Review>();
+        }
+
+        public Domain.Review UpdateReview(Domain.Review review)
+        {
+            var updatedReview = new Entities.Review
+            {
+                Title = review.Title,
+                Rating = review.Rating,
+                Body = review.Body
+            };
+            _context.Update(updatedReview);
+            _context.SaveChangesAsync();
+            return review;
         }
     }
 }

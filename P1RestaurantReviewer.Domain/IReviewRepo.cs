@@ -14,6 +14,8 @@ namespace P1RestaurantReviewer.Domain
 
         List<Review> GetReviewsbyRestaurantId(int id);
 
-        List<Review> GetMyReviews(int id);
+        List<Review> GetMyReviews(string id);
+
+        Review UpdateReview(Review review);
     }
 }

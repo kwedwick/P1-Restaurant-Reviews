@@ -10,9 +10,9 @@ namespace P1RestaurantReviewer.Domain
     {
         List<User> GetAllMembers();
 
-        User CreateUser(User user);
+        ///User CreateUser(User user);
 
-        User GetUserById(int id);
+        User GetUserById(string id);
 
         User GetUserLogin(User user);
 

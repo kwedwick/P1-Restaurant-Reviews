@@ -36,8 +36,8 @@ namespace P1RestaurantReviewer.DataAccess
         public List<Domain.User> GetAllMembers()
         {
             //Console.WriteLine("You're in UsersRepo");
-            return _context.Users.Select(
-                u => new Domain.User(u.Id, u.FirstName, u.LastName, u.Username, u.Email, u.IsAdmin)
+            return _context.AspNetUsers.Select(
+                u => new Domain.User(u.Id, u.UserName, u.Email)
             ).ToList();
         }
         /// <summary>
@@ -45,12 +45,10 @@ namespace P1RestaurantReviewer.DataAccess
         /// </summary>
         /// <param name="member"></param>
         /// <returns>user input and SQL created ID</returns>
-        public Domain.User CreateUser(Domain.User user)
+        /*public Domain.User CreateUser(Domain.User user)
         {
-            var newEntity = new Entities.User
+            var newEntity = new Entities.AspNetUser
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 Username = user.Username,
                 Email = user.Email,
                 Password = user.Password
@@ -59,21 +57,22 @@ namespace P1RestaurantReviewer.DataAccess
             _context.SaveChanges();
             user.Id = newEntity.Id;
             return user;
-        }
+        }*/
+
         /// <summary>
         /// Get's member object by ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Single Member data</returns>
-        public Domain.User GetUserById(int id)
+        public Domain.User GetUserById(string id)
         {
-            Entities.User foundUser = _context.Users.FirstOrDefault(
+            Entities.AspNetUser foundUser = _context.AspNetUsers.FirstOrDefault(
                 u => u.Id == id
             );
 
             if (foundUser != null)
             {
-                return new Domain.User(foundUser.Id, foundUser.FirstName, foundUser.LastName, foundUser.Username, foundUser.Email, foundUser.IsAdmin);
+                return new Domain.User(foundUser.Id, foundUser.UserName, foundUser.Email);
             }
             return new Domain.User();
         }
@@ -84,11 +83,11 @@ namespace P1RestaurantReviewer.DataAccess
         /// <returns>Models.Member user</returns>
         public Domain.User GetUserLogin(Domain.User user)
         {
-            Entities.User foundUser = _context.Users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
+            Entities.AspNetUser foundUser = _context.AspNetUsers.FirstOrDefault(u => u.UserName == user.Username && u.PasswordHash == user.Password);
 
             if (foundUser != null)
             {
-                return new Domain.User(foundUser.Id, foundUser.FirstName, foundUser.LastName, foundUser.Username, foundUser.Email, foundUser.IsAdmin);
+                return new Domain.User(foundUser.Id, foundUser.UserName, foundUser.Email);
             }
             return new Domain.User();
         }
@@ -100,7 +99,7 @@ namespace P1RestaurantReviewer.DataAccess
         /// <returns>string found email</returns>
         public string CheckUniqueEmail(string email)
         {
-            var foundUser = _context.Users.FirstOrDefault(
+            var foundUser = _context.AspNetUsers.FirstOrDefault(
                 user => user.Email == email
             );
 
@@ -118,13 +117,13 @@ namespace P1RestaurantReviewer.DataAccess
         /// <returns>string found username</returns>
         public string CheckUniqueUsername(string username)
         {
-            Entities.User foundUser = _context.Users.FirstOrDefault(
-               u => u.Username == username
+            Entities.AspNetUser foundUser = _context.AspNetUsers.FirstOrDefault(
+               u => u.UserName == username
            );
 
             if (foundUser != null)
             {
-                return username = foundUser.Username;
+                return username = foundUser.UserName;
             }
             return username = "";
         }

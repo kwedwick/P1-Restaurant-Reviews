@@ -30,7 +30,7 @@ namespace P1RestaurantReviewer.Domain
             RestaurantName = restaurantName;
         }
 
-        public Review(int id, string title, string body, int rating, int userId, int restaurantId, string username, string restaurantName) : this()
+        public Review(int id, string title, string body, int rating, string userId, int restaurantId, string username, string restaurantName) : this()
         {
             Id = id;
             Title = title;
@@ -49,7 +49,7 @@ namespace P1RestaurantReviewer.Domain
         public int Rating { get; set; }
 
         public int RestaurantId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Username { get; set; }
 
         public string RestaurantName { get; set; }

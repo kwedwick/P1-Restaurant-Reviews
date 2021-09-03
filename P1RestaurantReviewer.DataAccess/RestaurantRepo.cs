@@ -51,7 +51,17 @@ namespace P1RestaurantReviewer.DataAccess
             return restaurant;
         }
 
-
-
+        public Domain.Restaurant UpdateRestaurant(Domain.Restaurant restaurant)
+        {
+            var updateRestaurant = new Entities.Restaurant
+            {
+                Name = restaurant.Name,
+                Location = restaurant.Location,
+                Zipcode = restaurant.ZipCode
+            };
+            _context.Restaurants.Add(updateRestaurant);
+            _context.SaveChanges();
+            return restaurant;
+        }
     }
 }

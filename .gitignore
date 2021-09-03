@@ -12,6 +12,7 @@
 *.userosscache
 *.sln.docstates
 
+EmailSender.cs
 appsettings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)

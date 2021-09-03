@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 #nullable disable
-
 namespace P1RestaurantReviewer.DataAccess.Entities
 {
     public partial class User

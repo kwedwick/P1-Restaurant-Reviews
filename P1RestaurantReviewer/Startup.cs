@@ -1,13 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using P1RestaurantReviewer.Data;
 using P1RestaurantReviewer.DataAccess;
 using P1RestaurantReviewer.DataAccess.Entities;
 using P1RestaurantReviewer.Domain;
+using P1RestaurantReviewer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,15 +38,26 @@ namespace P1RestaurantReviewer
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IReviewRepo, ReviewRepo>();
             // need to add connection string to get database:
-
             services.AddDbContext<restaurantreviewerContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("p0restreviewerdb"));
                 options.LogTo(Console.WriteLine);
             });
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("p0restreviewerdb"));
+                options.LogTo(Console.WriteLine);
+            });
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
         }
@@ -52,6 +68,7 @@ namespace P1RestaurantReviewer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -64,6 +81,7 @@ namespace P1RestaurantReviewer
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -71,6 +89,7 @@ namespace P1RestaurantReviewer
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
