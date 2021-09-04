@@ -57,7 +57,7 @@ namespace P1RestaurantReviewer
                     Configuration.GetConnectionString("p0restreviewerdb"));
                 options.LogTo(Console.WriteLine);
             });
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             

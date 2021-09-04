@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using P1RestaurantReviewer.Domain;
+using P1RestaurantReviewer.Models;
 
 namespace P1RestaurantReviewer.Controllers
 {
@@ -24,30 +25,55 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: RestaurantController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return View(nameof(Index));
+            }
+            var restaurant = _repo.GetAllRestaurants().First(x => x.Id == id);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+            return View(restaurant);
         }
 
         // GET: RestaurantController/Create
-        public ActionResult Create()
+        [HttpGet]
+        public IActionResult Create()
         {
             return View();
         }
-
         // POST: RestaurantController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //public IActionResult Create(CreatedRestaurat viewModel)
+        public ActionResult Create([Bind("Id,Name,Location,ZipCode")]CreatedRestaurant viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            var restaurant = new Restaurant
+            {
+                Name = viewModel.Name,
+                Location = viewModel.Location,
+                ZipCode = viewModel.ZipCode
+            };
+
             try
             {
-                return RedirectToAction(nameof(Index));
+               var restaurat = _repo.CreateRestaurant(restaurant);
             }
-            catch
+            catch (InvalidOperationException e)
             {
-                return View();
+                ModelState.AddModelError(key: "Text", errorMessage: e.Message);
+                //ModelState.AddModelError(key: "Text", errorMessage: "Something went wrong. Please try again.");
+                return View(viewModel);
             }
+
+            return RedirectToAction(nameof(Details), new { id = restaurant.Id });
         }
 
         // GET: RestaurantController/Edit/5
@@ -69,6 +95,26 @@ namespace P1RestaurantReviewer.Controllers
             {
                 return View();
             }
+        }
+
+
+        public ActionResult WriteReview(int id)
+        {
+            return View();
+        }
+
+        // POST: Restaurant/CreateView/4
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult WriteReview(int restaurantId, string userId)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(restaurantId);
+            }
+
+            //return RedirectToAction(nameof(Details), new { id = restaurant.Id });
+            return View();
         }
 
         // GET: RestaurantController/Delete/5

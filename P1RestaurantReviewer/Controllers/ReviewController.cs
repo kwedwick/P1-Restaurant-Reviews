@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P1RestaurantReviewer.Domain;
 using System;
@@ -7,7 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace P1RestaurantReviewer.Controllers
-{
+{   
+    [Authorize]
     public class ReviewController : Controller
     {
         private readonly IReviewRepo _repo;
@@ -23,9 +25,9 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: ReviewController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            return View(_repo.GetMyReviews(id));
         }
 
         // GET: ReviewController/Create

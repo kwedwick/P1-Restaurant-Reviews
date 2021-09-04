@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using P1RestaurantReviewer.Domain;
+using P1RestaurantReviewer.Models;
 
 namespace P1RestaurantReviewer.Data
 {
@@ -12,5 +14,8 @@ namespace P1RestaurantReviewer.Data
             : base(options)
         {
         }
+        public DbSet<P1RestaurantReviewer.Domain.Review> Review { get; set; }
+        public DbSet<P1RestaurantReviewer.Domain.Restaurant> Restaurant { get; set; }
+        public DbSet<P1RestaurantReviewer.Models.UserRole> UserRole { get; set; }
     }
 }
