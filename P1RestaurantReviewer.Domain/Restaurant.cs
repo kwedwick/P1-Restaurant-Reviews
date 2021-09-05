@@ -19,12 +19,13 @@ namespace P1RestaurantReviewer.Domain
             ZipCode = zipCode;
         }
 
-        public Restaurant(int id, string name, string location, int zipCode, List<Review> reviews)
+        public Restaurant(int id, string name, string location, int zipCode, decimal avgRating, List<Review> reviews)
         {
             Id = id;
             Name = name;
             Location = location;
             ZipCode = zipCode;
+            AverageRating = avgRating;
             Reviews = reviews;
         }
 
@@ -35,6 +36,8 @@ namespace P1RestaurantReviewer.Domain
         //public double AvgRating => Reviews.Average(Reviews.Rating);
         [DisplayName("Zip code")]
         public int ZipCode { get; set; }
+
+        public decimal AverageRating { get; set; }
         public List<Review> Reviews {get; set; }
     }
 }

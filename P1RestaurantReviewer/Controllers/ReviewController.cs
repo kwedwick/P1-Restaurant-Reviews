@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using P1RestaurantReviewer.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,41 +31,32 @@ namespace P1RestaurantReviewer.Controllers
             return View(_repo.GetReviewById(id));
         }
 
-        // GET: ReviewController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ReviewController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: ReviewController/Edit/5
+        [Authorize(Roles ="Administrator, Manager")]
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            Review foundReview = _repo.GetReviewById(id);
+            if (foundReview != null)
+                return View(foundReview);
+            else
+                return RedirectToAction("Index");
         }
+
 
         // POST: ReviewController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [Required] Review review)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("EditReview", id);
+            }
             try
             {
-                return RedirectToAction(nameof(Index));
+                Review updatedReview = _repo.UpdateReview(id, review);
+                return View("Details", updatedReview);
             }
             catch
             {

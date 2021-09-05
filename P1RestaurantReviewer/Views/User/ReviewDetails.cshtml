@@ -41,8 +41,8 @@
     @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
     {
 
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> @Html.DisplayName(" | ")
-        <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+        <a asp-action="EditReview" asp-route-id="@Model.Id">Edit</a> @Html.DisplayName(" | ")
+        <a asp-action="DeleteReview" asp-route-id="@Model.Id">Delete</a>
         @Html.DisplayName(" | ")
     }
     <a asp-action="Index">Back to List</a>

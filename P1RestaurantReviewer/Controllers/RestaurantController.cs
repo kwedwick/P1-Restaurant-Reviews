@@ -26,30 +26,31 @@ namespace P1RestaurantReviewer.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index(string restName, string searchString)
+        public IActionResult Index(string zipCode, string searchString)
         {
             // Use LINQ to get list of genres.
             List<Restaurant> getAllRestaurants = _repo.GetAllRestaurants();
-            var nameQuery = from m in getAllRestaurants
-                                           orderby m.Name
-                                             select m.Name;
 
-             var restaurants = from m in _repo.GetAllRestaurants()
-                          select m;
+            var nameQuery = from r in getAllRestaurants
+                                           orderby r.ZipCode
+                                             select r.ZipCode;
+
+             var restaurants = from r in _repo.GetAllRestaurants()
+                          select r;
 
              if (!string.IsNullOrEmpty(searchString))
              {
                  restaurants = restaurants.Where(s => s.Name.Contains(searchString));
              }
 
-             if (!string.IsNullOrEmpty(restName))
+             if (!string.IsNullOrEmpty(zipCode))
              {
-                 restaurants = restaurants.Where(x => x.ZipCode == Convert.ToInt32(restName));
+                 restaurants = restaurants.Where(x => x.ZipCode == Convert.ToInt32(zipCode));
              }
 
              var restaurantNameVM = new RestaurantNameViewModel
              {
-                 Name = new SelectList(nameQuery.Distinct().ToList()),
+                 ZipCode = new SelectList(nameQuery.Distinct().ToList()),
                  Restaurants = restaurants.ToList()
              };
 
@@ -65,6 +66,26 @@ namespace P1RestaurantReviewer.Controllers
             }
             Restaurant restaurant = _repo.GetRestaurantById(id);
             restaurant.Reviews = _reviewRepo.GetReviewsbyRestaurantId(id);
+
+            decimal sum = 0;
+            int n = 0;
+            if(restaurant.Reviews.Count != 0)
+            {
+                for (int i = 0; i < restaurant.Reviews.Count; i++)
+                {
+                    sum += Convert.ToDecimal(restaurant.Reviews[i].Rating);
+                    n += 1;
+                }
+                decimal average = (sum / n);
+                            decimal average1 = Math.Round(average, 2);
+                            restaurant.AverageRating = average1;
+            }
+            else
+            {
+                restaurant.AverageRating = 0;
+            }
+            
+            
 
             if (restaurant == null)
             {
@@ -174,7 +195,6 @@ namespace P1RestaurantReviewer.Controllers
             try
             {
                 var newReview = _reviewRepo.CreateReview(review);
-                return View("Details", id);
             }
             catch (InvalidOperationException e)
             {
@@ -182,8 +202,8 @@ namespace P1RestaurantReviewer.Controllers
                 //ModelState.AddModelError(key: "Text", errorMessage: "Something went wrong. Please try again.");
                 return View(viewModel);
             }
+            return RedirectToAction(nameof(Details), new { id = review.RestaurantId });
 
-            
         }
 
         // GET: RestaurantController/Delete/5

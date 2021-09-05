@@ -1,22 +1,26 @@
 ﻿@model P1RestaurantReviewer.Models.RestaurantNameViewModel
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> SignInManager;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search Restaurants";
 }
 
 <h1>Search Restaurants</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<form asp-controller="Restaurant" asp-action="Index">
+@if (SignInManager.IsSignedIn(User))
+{<p>
+        <a asp-action="Create">Create New</a>
+    </p>}
+<form asp-controller="Restaurant" asp-action="Index" method="get">
     <p>
-
-        <select asp-for="Restaurants" asp-items="Model.Name">
+        Select Zip Code:
+        <select asp-for="ZipCode" asp-items="Model.ZipCode">
             <option value="">All</option>
         </select>
-
-        Restaurant Name: <input type="text"  asp-for="SearchString" />
+        <br />
+        <br />
+        Restaurant Name: <input type="text" asp-for="SearchString" />
         <input type="submit" value="Filter" />
     </p>
 </form>
@@ -35,30 +39,39 @@
             <th>
                 @Html.DisplayNameFor(model => model.Restaurants[0].ZipCode)
             </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Restaurants[0].AverageRating)
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Restaurants) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZipCode)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Restaurants)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        @Html.DisplayName(" | ")
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> @Html.DisplayName(" | ")
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

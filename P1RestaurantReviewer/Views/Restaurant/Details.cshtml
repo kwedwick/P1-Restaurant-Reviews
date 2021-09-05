@@ -8,29 +8,35 @@
     <h4>Restaurant Detials</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Location)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Location)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ZipCode)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AverageRating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AverageRating)
         </dd>
     </dl>
 </div>
@@ -39,7 +45,7 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 
-    
+
 </div>
 
 <div>
@@ -48,38 +54,39 @@
     <hr />
     @foreach (var review in Model.Reviews)
     {
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => review.Id)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => review.Id)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => review.Title)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => review.Title)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => review.Rating)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => review.Rating)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => review.Username)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => review.Username)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => review.Body)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => review.Body)
-    </dd>
-</dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => review.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => review.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => review.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => review.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => review.Rating)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => review.Rating)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => review.Username)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => review.Username)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => review.Body)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => review.Body)
+            </dd>
+        </dl>
+        <hr />
     }
 
 </div>

@@ -188,10 +188,11 @@ namespace P1RestaurantReviewer.DataAccess
             return new List<Domain.Review>();
         }
 
-        public Domain.Review UpdateReview(Domain.Review review)
+        public Domain.Review UpdateReview(int id, Domain.Review review)
         {
             var updatedReview = new Entities.Review
             {
+                Id = id,
                 Title = review.Title,
                 Rating = review.Rating,
                 Body = review.Body
@@ -208,6 +209,19 @@ namespace P1RestaurantReviewer.DataAccess
             {
                 return new Domain.Review(foundReview.Id, foundReview.Title, foundReview.Body, foundReview.Rating);
             }
+            return new Domain.Review();
+        }
+
+        public Domain.Review DeleteReviewById(int id)
+        {
+            var review = _context.Reviews.SingleOrDefault(r => r.Id == id);
+            if (review != null)
+            {
+                _context.Remove(review);
+                _context.SaveChanges();
+                return new Domain.Review();
+            }
+
             return new Domain.Review();
         }
     }
