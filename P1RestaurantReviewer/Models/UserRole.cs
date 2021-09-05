@@ -11,7 +11,6 @@ namespace P1RestaurantReviewer.Models
     {
         public string Id { get; set; }
         [Required]
-        [MinLength(3)]
         [DisplayName("Role Name")]
         public string RoleName { get; set; }
 

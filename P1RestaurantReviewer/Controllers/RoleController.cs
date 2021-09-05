@@ -15,7 +15,7 @@ namespace P1RestaurantReviewer.Controllers
     {
         //ready role manager class
         private readonly RoleManager<IdentityRole> roleManager;
-        private UserManager<IdentityUser> userManager;
+        private readonly UserManager<IdentityUser> userManager;
 
         public ViewResult Index() => View(roleManager.Roles);
 
@@ -27,17 +27,28 @@ namespace P1RestaurantReviewer.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Required] string name)
         {
             if (ModelState.IsValid)
             {
-                IdentityResult result = await roleManager.CreateAsync(new IdentityRole(name));
-                if (result.Succeeded)
-                    return RedirectToAction("Index");
-                else
-                    Errors(result);
+                
+                try
+                {
+                    IdentityResult result = await roleManager.CreateAsync(new IdentityRole(name));
+                    if (result.Succeeded)
+                        return RedirectToAction("Index");
+                    else
+                        Errors(result);
+                }
+                catch (InvalidOperationException e)
+                {
+                    ModelState.AddModelError(key: "Text", errorMessage: e.Message);
+                    ModelState.AddModelError(key: "Text", errorMessage: "Something went wrong. Please use a different role name as it may already exist.");
+                    return View("Create", name);
+                }
             }
-            return View(name);
+            return View("Create", name);
         }
 
         [HttpPost]
@@ -59,12 +70,19 @@ namespace P1RestaurantReviewer.Controllers
             return View("Index", roleManager.Roles);
         }
 
+        /// <summary>
+        /// This method is used to get memebers and non-members of a selected Identity Role
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Update(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
             List<IdentityUser> members = new List<IdentityUser>();
             List<IdentityUser> nonMembers = new List<IdentityUser>();
-            foreach (IdentityUser user in userManager.Users)
+            List<IdentityUser> users = userManager.Users.ToList();
+
+            foreach (IdentityUser user in users)
             {
                 var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
                 list.Add(user);
@@ -77,7 +95,13 @@ namespace P1RestaurantReviewer.Controllers
             });
         }
 
+        /// <summary>
+        /// This method is used for adding or removing users from an Identity Role
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(RoleModification model)
         {
             IdentityResult result;
@@ -113,7 +137,8 @@ namespace P1RestaurantReviewer.Controllers
 
         private void Errors(IdentityResult result)
         {
-            throw new NotImplementedException();
+            foreach (IdentityError error in result.Errors)
+                ModelState.AddModelError("", error.Description);
         }
     }
 }

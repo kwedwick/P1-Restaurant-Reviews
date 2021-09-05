@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,23 +11,29 @@ namespace P1RestaurantReviewer.Domain
     {
         public Review() { }
 
-        public Review(int id, DateTime dateTime, string title, string body, int rating)
+        public Review(int id, string title, string body, int rating)
         {
             Id = id;
-            TimeCreated = dateTime;
             Title = title;
             Body = body;
             Rating = rating;
 
         }
-
+        public Review(string title, string body, int rating, string username, string restaurantName) : this()
+        {
+            Title = title;
+            Body = body;
+            Rating = rating;
+            Username = username;
+            RestaurantName = restaurantName;
+        }
         public Review(int id, string title, string body, int rating, string username, string restaurantName) : this()
         {
             Id = id;
             Title = title;
             Body = body;
             Rating = rating;
-            Username = Username;
+            Username = username;
             RestaurantName = restaurantName;
         }
 
@@ -38,7 +45,7 @@ namespace P1RestaurantReviewer.Domain
             Rating = rating;
             UserId = userId;
             RestaurantId = restaurantId;
-            Username = Username;
+            Username = username;
             RestaurantName = restaurantName;
         }
         public int Id { get; set; }
@@ -51,7 +58,7 @@ namespace P1RestaurantReviewer.Domain
         public int RestaurantId { get; set; }
         public string UserId { get; set; }
         public string Username { get; set; }
-
+        [DisplayName("Restaurant")]
         public string RestaurantName { get; set; }
     }
 }

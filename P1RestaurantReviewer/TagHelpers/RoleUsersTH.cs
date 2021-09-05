@@ -31,7 +31,9 @@ namespace P1RestaurantReviewer.TagHelpers
             IdentityRole role = await roleManager.FindByIdAsync(Role);
             if (role != null)
             {
-                foreach (var user in userManager.Users)
+                List<IdentityUser> users = userManager.Users.ToList();
+
+                foreach (IdentityUser user in users)
                 {
                     if (user != null && await userManager.IsInRoleAsync(user, role.Name))
                         names.Add(user.UserName);

@@ -14,7 +14,13 @@ namespace P1RestaurantReviewer.Domain
 
             Restaurant CreateRestaurant(Restaurant restaurant);
 
-            Restaurant UpdateRestaurant(Restaurant restaurant);
+            List<Restaurant> GetRestaurantByZipcode(int id);
+
+            Restaurant UpdateRestaurant(int id, Restaurant restaurant);
+
+            Restaurant GetRestaurantById(int id);
+
+            Restaurant DeleteRestaurantById(int id);
         }
 }
 

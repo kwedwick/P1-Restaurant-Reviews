@@ -11,6 +11,7 @@ namespace P1RestaurantReviewer.Models
     /// </summary>
     public class RoleEdit
     {
+        public string Id { get; set; }
         public IdentityRole Role { get; set; }
         public IEnumerable<IdentityUser> Members { get; set; }
         public IEnumerable<IdentityUser> NonMembers { get; set; }

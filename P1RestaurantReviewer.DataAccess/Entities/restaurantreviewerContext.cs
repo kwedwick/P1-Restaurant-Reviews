@@ -130,6 +130,7 @@ namespace P1RestaurantReviewer.DataAccess.Entities
             modelBuilder.Entity<Restaurant>(entity =>
             {
                 entity.Property(e => e.Location)
+                    .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
@@ -164,19 +165,19 @@ namespace P1RestaurantReviewer.DataAccess.Entities
                     .WithMany(p => p.ReviewJoins)
                     .HasForeignKey(d => d.RestaurantId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ReviewJoi__Resta__6D9742D9");
+                    .HasConstraintName("FK__ReviewJoi__Resta__038683F8");
 
                 entity.HasOne(d => d.Review)
                     .WithMany(p => p.ReviewJoins)
                     .HasForeignKey(d => d.ReviewId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ReviewJoi__Revie__6CA31EA0");
+                    .HasConstraintName("FK__ReviewJoi__Revie__02925FBF");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ReviewJoins)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ReviewJoi__UserI__6E8B6712");
+                    .HasConstraintName("FK__ReviewJoi__UserI__047AA831");
             });
 
             OnModelCreatingPartial(modelBuilder);

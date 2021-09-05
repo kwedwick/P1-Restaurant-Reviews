@@ -19,9 +19,58 @@ namespace P1RestaurantReviewer.DataAccess
 
         public List<Domain.Review> GetAllReviews()
         {
-            return _context.Reviews.Select(
-                review => new Domain.Review(review.Id, review.TimeCreated, review.Title, review.Body, review.Rating)
-                ).ToList();
+            /*return _context.Reviews.Select(
+                review => new Domain.Review(review.Id, review.Title, review.Body, review.Rating)
+                ).ToList();*/
+            List<Domain.Review> restuarantReviews = _context.ReviewJoins
+           .Join(
+               _context.Reviews,
+               reviewJoin => reviewJoin.ReviewId,
+               review => review.Id,
+               (reviewJoin, review) => new Domain.Review
+               {
+                   Id = review.Id,
+                   Title = review.Title,
+                   Body = review.Body,
+                   Rating = review.Rating,
+                   UserId = reviewJoin.UserId,
+                   RestaurantId = reviewJoin.RestaurantId
+               }
+           )
+           .Join(
+               _context.AspNetUsers,
+               reviewJoin => reviewJoin.UserId,
+               userJoin => userJoin.Id,
+               (reviewJoin, userJoin) => new Domain.Review
+               {
+                   Id = reviewJoin.Id,
+                   Title = reviewJoin.Title,
+                   Body = reviewJoin.Body,
+                   Rating = reviewJoin.Rating,
+                   Username = userJoin.UserName,
+                   RestaurantId = reviewJoin.RestaurantId
+               }
+           )
+           .Join(
+                _context.Restaurants,
+               reviewJoin => reviewJoin.RestaurantId,
+               restaurantJoin => restaurantJoin.Id,
+               (reviewJoin, restaurantJoin) => new Domain.Review
+               {
+                   Id = reviewJoin.Id,
+                   Title = reviewJoin.Title,
+                   Body = reviewJoin.Body,
+                   Rating = reviewJoin.Rating,
+                   Username = reviewJoin.Username,
+                   RestaurantName = restaurantJoin.Name
+               }
+                )
+           .ToList();
+            if (restuarantReviews != null)
+            {
+                return restuarantReviews;
+            }
+            return new List<Domain.Review>();
         }
 
         public Domain.Review CreateReview(Domain.Review review)
@@ -81,7 +130,9 @@ namespace P1RestaurantReviewer.DataAccess
                     Title = reviewJoin.Title,
                     Body = reviewJoin.Body,
                     Rating = reviewJoin.Rating,
-                    Username = userJoin.UserName
+                    Username = userJoin.UserName,
+                    RestaurantName = reviewJoin.RestaurantName
+                    
                 }
             )
             .ToList();
@@ -149,5 +200,16 @@ namespace P1RestaurantReviewer.DataAccess
             _context.SaveChangesAsync();
             return review;
         }
+
+        public Domain.Review GetReviewById(int id)
+        {
+            Entities.Review foundReview = _context.Reviews.FirstOrDefault(r => r.Id == id);
+            if (foundReview != null)
+            {
+                return new Domain.Review(foundReview.Id, foundReview.Title, foundReview.Body, foundReview.Rating);
+            }
+            return new Domain.Review();
+        }
     }
+ 
 }

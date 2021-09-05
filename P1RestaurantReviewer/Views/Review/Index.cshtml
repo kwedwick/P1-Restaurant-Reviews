@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<P1RestaurantReviewer.Domain.Review>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All Reviews";
 }
 
-<h1>Index</h1>
+<h1>All Reviews</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -23,12 +20,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RestaurantId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Username)
@@ -53,12 +44,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RestaurantId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace P1RestaurantReviewer.Models
 
         [Required]
         [DataType(DataType.PostalCode)]
+        [DisplayName("Zip code")]
         public int ZipCode { get; set; }
 
     }

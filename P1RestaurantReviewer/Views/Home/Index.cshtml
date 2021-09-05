@@ -1,8 +1,42 @@
-﻿@{
+﻿@model IEnumerable<P1RestaurantReviewer.Domain.Restaurant>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Welcome!</h1>
+            <p>Find restaurants by name and zipcode to find your next meal!</p>
+            <p><a class="btn btn-primary btn-lg" asp-controller="Restaurant" asp-action="Index" role="button">Search Restaurants &raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>A few of restaurants to start you off...</h2>
+    <br/>
+        <!-- Example row of columns -->
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <h2>@item.Name</h2>
+                    <p>Location: @item.Location</p>
+                    <p>Zip code: @item.ZipCode</p>
+                    <p>
+                        <a class="btn btn-secondary" asp-controller="Restaurant" asp-action="Details" asp-route-id="@item.Id">
+                            View details &raquo;
+                        </a>
+                    </p>
+                </div>
+            }
+
+        </div>
+
+        <hr>
+
+    </div> <!-- /container -->
+
+</main>

@@ -6,21 +6,28 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using P1RestaurantReviewer.Domain;
 
 namespace P1RestaurantReviewer.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IRestaurantRepo _repo;
+        public HomeController(ILogger<HomeController> logger, IRestaurantRepo repo)
         {
             _logger = logger;
+            _repo = repo;
         }
 
+        
+        
         public IActionResult Index()
         {
-            return View();
+            var random = new Random();
+            var list = _repo.GetAllRestaurants();
+            var randomList = list.OrderBy(x => random.Next(3));
+            return View(randomList);
         }
 
         public IActionResult Privacy()

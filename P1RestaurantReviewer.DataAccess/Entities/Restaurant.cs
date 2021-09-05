@@ -15,7 +15,7 @@ namespace P1RestaurantReviewer.DataAccess.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public int? Zipcode { get; set; }
+        public int Zipcode { get; set; }
 
         public virtual ICollection<ReviewJoin> ReviewJoins { get; set; }
     }

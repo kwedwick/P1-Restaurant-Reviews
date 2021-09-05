@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace P1RestaurantReviewer.Controllers
 {   
-    [Authorize]
+    [Authorize(Roles="User, Manager, Administrator")]
     public class ReviewController : Controller
     {
         private readonly IReviewRepo _repo;
@@ -25,9 +25,9 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: ReviewController/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
-            return View(_repo.GetMyReviews(id));
+            return View(_repo.GetReviewById(id));
         }
 
         // GET: ReviewController/Create

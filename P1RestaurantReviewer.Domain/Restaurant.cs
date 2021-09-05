@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,11 +30,11 @@ namespace P1RestaurantReviewer.Domain
 
 
         public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Location { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
         //public double AvgRating => Reviews.Average(Reviews.Rating);
+        [DisplayName("Zip code")]
         public int ZipCode { get; set; }
-
         public List<Review> Reviews {get; set; }
     }
 }

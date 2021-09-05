@@ -17,5 +17,7 @@ namespace P1RestaurantReviewer.Data
         public DbSet<P1RestaurantReviewer.Domain.Review> Review { get; set; }
         public DbSet<P1RestaurantReviewer.Domain.Restaurant> Restaurant { get; set; }
         public DbSet<P1RestaurantReviewer.Models.UserRole> UserRole { get; set; }
+        public DbSet<P1RestaurantReviewer.Models.User> User { get; set; }
+        public DbSet<P1RestaurantReviewer.Models.CreateReview> CreateReview { get; set; }
     }
 }

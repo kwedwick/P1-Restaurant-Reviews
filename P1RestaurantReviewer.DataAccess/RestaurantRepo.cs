@@ -22,7 +22,7 @@ namespace P1RestaurantReviewer.DataAccess
         public List<Domain.Restaurant> GetAllRestaurants()
         {
             return _context.Restaurants.Select(
-                restaurant => new Domain.Restaurant(restaurant.Id, restaurant.Name, restaurant.Location, (int)restaurant.Zipcode)
+                restaurant => new Domain.Restaurant(restaurant.Id, restaurant.Name, restaurant.Location, restaurant.Zipcode)
             ).ToList();
         }
 
@@ -32,10 +32,11 @@ namespace P1RestaurantReviewer.DataAccess
 
             if (foundRestaurant != null)
             {
-                return new Domain.Restaurant(foundRestaurant.Id, foundRestaurant.Name, foundRestaurant.Location, (int)foundRestaurant.Zipcode);
+                return new Domain.Restaurant(foundRestaurant.Id, foundRestaurant.Name, foundRestaurant.Location, foundRestaurant.Zipcode);
             }
             return new Domain.Restaurant();
         }
+
 
         public Domain.Restaurant CreateRestaurant(Domain.Restaurant restaurant)
         {
@@ -51,17 +52,87 @@ namespace P1RestaurantReviewer.DataAccess
             return restaurant;
         }
 
-        public Domain.Restaurant UpdateRestaurant(Domain.Restaurant restaurant)
+        public Domain.Restaurant UpdateRestaurant(int id, Domain.Restaurant restaurant)
         {
             var updateRestaurant = new Entities.Restaurant
             {
+                Id = id,
                 Name = restaurant.Name,
                 Location = restaurant.Location,
                 Zipcode = restaurant.ZipCode
             };
-            _context.Restaurants.Add(updateRestaurant);
+            _context.Restaurants.Update(updateRestaurant);
             _context.SaveChanges();
             return restaurant;
+        }
+
+        public Domain.Restaurant GetRestaurantById(int id)
+        {
+
+            /*return _context.Restaurants
+                .Where(rs => rs.Id == id)
+                .Include(r => r.ReviewJoins)
+                .ThenInclude(j => j.Review)
+                .Select(rj => new Domain.Restaurant
+                {
+                    Id = rj.Id,
+                    Name = rj.Name,
+                    Location = rj.Location,
+                    ZipCode = rj.Zipcode,
+                    Reviews = rj.ReviewJoins.Select(k => new Domain.Review(k.Review.Id, k.Review.Title, k.Review.Body, k.Review.Rating)).ToList()
+                })
+                .ToList();*/
+
+            /*var restaurants = _context.Restaurants
+                .Where(rst => rst.Id == id)
+                .Include(r => r.ReviewJoins)
+                    .ThenInclude(j => j.Review)
+                .ToList();
+
+            foreach (var entity in restaurants)
+            {
+                var r = new Domain.Restaurant(entity.Id, entity.Name, entity.Location, entity.Zipcode);
+                r.Reviews.AddRange(entity.ReviewJoins.Select(j => new Domain.Review(j.Review.Id, j.Review.Title, j.Review.Body, j.Review.Rating)));
+            }*/
+
+            Entities.Restaurant foundRestaurant = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Id == id);
+            if (foundRestaurant != null)
+            {
+                return new Domain.Restaurant(foundRestaurant.Id, foundRestaurant.Name, foundRestaurant.Location, foundRestaurant.Zipcode);
+            }
+            return new Domain.Restaurant();
+        }
+
+        public List<Domain.Restaurant> GetRestaurantByZipcode(int zipcode)
+        {
+            List<Domain.Restaurant> foundRestaurant = _context.Restaurants.Where(restaurant => restaurant.Zipcode == zipcode).Select(
+                rz => new Domain.Restaurant
+                {
+                    Id = rz.Id,
+                    Name = rz.Name,
+                    Location = rz.Location,
+                    ZipCode = rz.Zipcode
+                }
+                ).ToList();
+
+            if (foundRestaurant != null)
+            {
+                return foundRestaurant; 
+            }
+            return new List<Domain.Restaurant>();
+        }
+
+        public Domain.Restaurant DeleteRestaurantById(int id)
+        {
+            var restaurant = _context.Restaurants.Single(r => r.Id == id);
+            if(restaurant != null)
+            {
+                _context.Remove(restaurant);
+                _context.SaveChanges();
+                return new Domain.Restaurant();
+            }
+
+            return new Domain.Restaurant();
         }
     }
 }

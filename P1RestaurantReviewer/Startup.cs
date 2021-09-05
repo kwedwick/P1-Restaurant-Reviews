@@ -58,9 +58,11 @@ namespace P1RestaurantReviewer
                 options.LogTo(Console.WriteLine);
             });
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
-            
+
 
             services.AddTransient<IEmailSender, EmailSender>();
 

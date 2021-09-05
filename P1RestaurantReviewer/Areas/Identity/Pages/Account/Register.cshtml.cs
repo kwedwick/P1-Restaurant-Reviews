@@ -87,6 +87,7 @@ namespace P1RestaurantReviewer.Areas.Identity.Pages.Account
 
                     _logger.LogInformation("User created a new account with password.");
 
+                    _userManager.AddToRoleAsync(user, "User").Wait();
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
