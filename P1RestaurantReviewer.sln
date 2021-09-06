@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P1RestaurantReviewer", "P1RestaurantReviewer\P1RestaurantReviewer.csproj", "{9EC830CC-648F-4FAF-ABF4-E754FAED7601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P1RestaurantReviewer", "P1RestaurantReviewer\P1RestaurantReviewer.csproj", "{9EC830CC-648F-4FAF-ABF4-E754FAED7601}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P1RestaurantReviewer.DataAccess", "P1RestaurantReviewer.DataAccess\P1RestaurantReviewer.DataAccess.csproj", "{2E491D29-0E4A-4ECF-8C9C-1B11D05C9B32}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P1RestaurantReviewer.Domain", "P1RestaurantReviewer.Domain\P1RestaurantReviewer.Domain.csproj", "{904B8A91-EF29-48EC-A756-65054C8667BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{5D0AE734-A473-4BB2-B83B-480224641B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{904B8A91-EF29-48EC-A756-65054C8667BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{904B8A91-EF29-48EC-A756-65054C8667BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{904B8A91-EF29-48EC-A756-65054C8667BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D0AE734-A473-4BB2-B83B-480224641B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D0AE734-A473-4BB2-B83B-480224641B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D0AE734-A473-4BB2-B83B-480224641B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D0AE734-A473-4BB2-B83B-480224641B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
