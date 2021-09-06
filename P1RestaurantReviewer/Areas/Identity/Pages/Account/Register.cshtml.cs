@@ -78,13 +78,7 @@ namespace P1RestaurantReviewer.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            var checkEmailIsValid = await _userManager.FindByEmailAsync(Input.Email);
-            if (checkEmailIsValid != null)
-            {
-                ModelState.AddModelError(Input.Email, "Email already in use.");
-            }
-            else if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
