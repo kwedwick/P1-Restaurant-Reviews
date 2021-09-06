@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using P1RestaurantReviewer.Domain;
 
 namespace P1RestaurantReviewer.Areas.Identity.Pages.Account
 {
@@ -23,17 +24,19 @@ namespace P1RestaurantReviewer.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUserRepo _userRepo;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IUserRepo userRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _userRepo = userRepo;
         }
 
         [BindProperty]
@@ -78,7 +81,12 @@ namespace P1RestaurantReviewer.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+            var checkEmailIsUnique = _userRepo.CheckUniqueEmail(Input.Email);
+            if(checkEmailIsUnique != null)
+            {
+                ModelState.AddModelError(Input.Email, "Email is not unique, please use a different email");
+            }
+            else if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
