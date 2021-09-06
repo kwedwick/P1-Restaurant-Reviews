@@ -97,11 +97,11 @@ The restaurant review application is a software that lets customers leave review
 - add a new user - done
 - ability to search user as admin - done
 - display details of a restaurant for user 
-- add reviews to a restaurant as a user
-- view details of restaurants as a user
-- view reviews of restaurants as a user
-- calculate reviews’ average rating for each restaurant
-- search restaurant (by name, rating, zip code, etc.)
+- add reviews to a restaurant as a user - done
+- view details of restaurants as a user - done
+- view reviews of restaurants as a user - done
+- calculate reviews’ average rating for each restaurant - done
+- search restaurant (by name, rating, zip code, etc.) - done
 
 ### models
 
