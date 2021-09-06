@@ -9,9 +9,7 @@
 <h1>Search Restaurants</h1>
 
 @if (SignInManager.IsSignedIn(User))
-{<p>
-        <a asp-action="Create">Create New</a>
-    </p>}
+{<p><a class="btn btn-primary" asp-action="Create" role="button">Add New Restaurant &raquo;</a></p>}
 <form asp-controller="Restaurant" asp-action="Index" method="get">
     <p>
         Select Zip Code:
@@ -21,7 +19,7 @@
     </p>
     <p>
         Restaurant Name: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
+        <input type="submit" class="btn-primary" value="Filter" />
     </p>
 </form>
 <table class="table">

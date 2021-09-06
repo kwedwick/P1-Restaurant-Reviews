@@ -7,7 +7,7 @@
 <h1>My Reviews</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+<p><a class="btn btn-primary" asp-controller="Restaurant" asp-action="Index" role="button">Search Restaurant to leave review &raquo;</a></p>
 </p>
 <table class="table">
     <thead>
@@ -22,35 +22,33 @@
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.RestaurantName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Body)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RestaurantName)
-            </td>
-            <td>
-                <a asp-action="EditReview" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="ReviewDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteReview" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Body)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RestaurantName)
+                </td>
+                <td>
+                    <a asp-action="EditReview" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="ReviewDetails" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="DeleteReview" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

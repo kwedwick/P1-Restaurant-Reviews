@@ -18,10 +18,10 @@ July 2021 Arlington .NET / Nick Escalona
 ### design
 * project layout given here is only a suggestion. the general idea of
   separation of concerns is a requirement.
-* use EF Core (either database-first approach with a SQL script or code-first approach with migrations)
-* use an Azure SQL DB in third normal form; include a database diagram
+* use EF Core (either database-first approach with a SQL script or code-first approach with migrations) - done
+* use an Azure SQL DB in third normal form; include a database diagram - done
 * don't use public fields
-* define and use at least one interface
+* define and use at least one interface - done
 
 #### core / domain / business logic
 * class library
@@ -31,25 +31,25 @@ July 2021 Arlington .NET / Nick Escalona
 * (recommended: has no dependency on UI, data access, or any input/output considerations)
 
 #### user interface
-* ASP.NET Core MVC web application
-* separate request processing and presentation concerns with MVC pattern
-* strongly-typed views
-* minimize logic in views
-* use dependency injection
+* ASP.NET Core MVC web application - done
+* separate request processing and presentation concerns with MVC pattern - done
+* strongly-typed views = done
+* minimize logic in views - done
+* use dependency injection - done
 * customize the default styling to some extent
-* keep CodeNamesLikeThis out of the visible UI
-* has only display- and input-related code
+* keep CodeNamesLikeThis out of the visible UI - done
+* has only display- and input-related code - done
 
 #### data access
-* class library
-* contains EF Core DbContext and entity classes
-* contains data access logic but no business logic
-* use repository pattern for separation of concerns
+* class library - done
+* contains EF Core DbContext and entity classes - done
+* contains data access logic but no business logic - done
+* use repository pattern for separation of concerns - done
 
 #### test
 * at least 10 test methods
 * focus on unit testing business logic
-* data access tests (if present) should not impact the app's actual database
+* data access tests (if present) should not impact the app's actual database - done
 
 ## store web application requirements
 
@@ -94,9 +94,9 @@ The restaurant review application is a software that lets customers leave review
 
 ### functionality
 
-- add a new user
-- ability to search user as admin
-- display details of a restaurant for user
+- add a new user - done
+- ability to search user as admin - done
+- display details of a restaurant for user 
 - add reviews to a restaurant as a user
 - view details of restaurants as a user
 - view reviews of restaurants as a user
