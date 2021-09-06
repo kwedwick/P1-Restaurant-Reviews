@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace P1RestaurantReviewer.Models
 {
+    /// <summary>
+    /// This is displayed on Restaurant Index page to search and filter restaurants
+    /// </summary>
     public class RestaurantNameViewModel
     {
         public List<Restaurant> Restaurants { get; set; }

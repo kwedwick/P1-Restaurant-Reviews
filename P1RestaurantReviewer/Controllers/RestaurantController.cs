@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace P1RestaurantReviewer.Controllers
-{
+{/// <summary>
+/// Handles all restaurant routes and creating a review
+/// </summary>
     public class RestaurantController : Controller
     {
         // GET: RestaurantController
@@ -25,7 +27,12 @@ namespace P1RestaurantReviewer.Controllers
             _reviewRepo = reviewRepo;
             _userManager = userManager;
         }
-
+        /// <summary>
+        /// displays all restaurants in db and can sort by zip and search by name
+        /// </summary>
+        /// <param name="zipCode"></param>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public IActionResult Index(string zipCode, string searchString)
         {
             // Use LINQ to get list of genres.
@@ -58,6 +65,11 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: RestaurantController/Details/5
+        /// <summary>
+        /// displays details page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Details(int id)
         {
             if (id == null)
@@ -95,6 +107,10 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: RestaurantController/Create
+        /// <summary>
+        /// Create view to take in new data
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public IActionResult Create()
@@ -102,6 +118,11 @@ namespace P1RestaurantReviewer.Controllers
             return View();
         }
         // POST: RestaurantController/Create
+        /// <summary>
+        /// Submits the users create restaurant
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -133,6 +154,11 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: RestaurantController/Edit/5
+        /// <summary>
+        /// finds restaurant by ID to display in the edit page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Edit(int id)
@@ -145,6 +171,12 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // POST: RestaurantController/Edit/5
+        /// <summary>
+        /// Submits the users Edit data to the DB
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="restaurant"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator, Manager")]
@@ -164,7 +196,10 @@ namespace P1RestaurantReviewer.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Write Review UI
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult WriteReview()
@@ -173,6 +208,12 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // POST: Restaurant/CreateView/4
+        /// <summary>
+        /// Creates a review from restaurants/writereview/id - it takes in Users ID and Restaurant ID as well
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -207,6 +248,11 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: RestaurantController/Delete/5
+        /// <summary>
+        /// Finds Restaurant by ID to display in the delete page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Delete(int id)
@@ -219,6 +265,12 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // POST: RestaurantController/Delete/5
+        /// <summary>
+        /// Submits the Delete action to the DB and returns to the index view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="restaurant"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator, Manager")]

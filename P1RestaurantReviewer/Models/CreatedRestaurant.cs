@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace P1RestaurantReviewer.Models
 {
+    /// <summary>
+    /// This model is used to take in User Input to submit new Restaurant to DB and validates it
+    /// </summary>
     public class CreatedRestaurant
     {
         [Required]

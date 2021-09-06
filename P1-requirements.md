@@ -7,11 +7,11 @@ July 2021 Arlington .NET / Nick Escalona
 * CI with compile, automated tests, static analysis
 * CD to cloud service (like Azure App Service)
 ### functionality
-* client-side validation
-* server-side validation
-* exception handling
-* CSRF prevention
-* persistent data; no prices, restaurants, history, etc. hardcoded in C#
+* client-side validation - done
+* server-side validation - done
+* exception handling - done
+* CSRF prevention - done
+* persistent data; no prices, restaurants, history, etc. hardcoded in C# - done
 * logging of exceptions, EF SQL commands, and other events
 * (optional: asynchronous network & file I/O)
 

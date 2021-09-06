@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace P1RestaurantReviewer.Services
 {
+    /// <summary>
+    /// This handles the email confirmation when a user registers and needs a new email confirmation
+    /// </summary>
     public class EmailSender : IEmailSender
 
     {

@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace P1RestaurantReviewer.Controllers
 {
+    /// <summary>
+    /// This handles 
+    /// </summary>
     [Authorize(Roles = "Administrator, Manager")]
     public class AdminController : Controller
     {

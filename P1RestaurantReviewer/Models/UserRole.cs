@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace P1RestaurantReviewer.Models
 {
+    /// <summary>
+    /// This model is used for getting a Role and a list of Users who are in it
+    /// </summary>
     public class UserRole
     {
         public string Id { get; set; }
