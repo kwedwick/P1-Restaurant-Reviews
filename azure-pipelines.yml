@@ -33,6 +33,13 @@ stages:
       inputs:
         restoreSolution: '$(solution)'
 
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'Sonar Cloud Connection'
+        organization: 'kwedwick'
+        scannerMode: 'MSBuild'
+        projectKey: 'kwedwick_P1-Restaurant-Reviews'
+        projectName: 'P1-Restaurant-Reviews'
     - task: VSBuild@1
       inputs:
         solution: '$(solution)'
@@ -45,11 +52,19 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
     
+    - task: SonarCloudAnalyze@1
+      displayName: 'Run SonarCloud analysis'
+
+    - task: SonarCloudPublish@1
+      displayName: 'Publish results on build summary'
+
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+    
+
 
 - stage: Deploy
   jobs:
