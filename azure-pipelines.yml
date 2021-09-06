@@ -66,7 +66,7 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: $(azureSubscription)
+        azureSubscription: 'Azure subscription 1 (27776f6f-caf8-4c14-aa64-4b5bf4cc0112)'
         appType: 'webApp'
-        WebAppName: '$(webappname)'
+        WebAppName: 'restaurant-reviewer-kw'
         packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
