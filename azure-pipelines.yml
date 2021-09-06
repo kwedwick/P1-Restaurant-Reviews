@@ -21,9 +21,9 @@ variables:
   workingDirectory: '.'
 
 stages:
-- stage: build
+- stage: Build
   jobs:
-  - job: build
+  - job: Build
     pool:
       vmImage: 'windows-latest'
     steps:
@@ -42,6 +42,19 @@ stages:
       displayName: dotnet test
       workingDirectory: $(workingDirectory)
 
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: $(azureSubscription)
+        appType: 'webApp'
+        WebAppName: '$(webappname)'
+        packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
