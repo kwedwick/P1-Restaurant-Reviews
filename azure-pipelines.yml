@@ -18,7 +18,7 @@ variables:
   solution: '*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  workingDirectory: 'P1RestaurantReviewer'
+  workingDirectory: '.'
 
 stages:
 - stage: build
@@ -27,6 +27,12 @@ stages:
     pool:
       vmImage: 'windows-latest'
     steps:
+    
+    - task: NuGetToolInstaller@1
+
+    - task: NuGetCommand@2
+      inputs:
+        restoreSolution: '$(solution)'
 
     - script: dotnet build --configuration Release
       displayName: dotnet build
