@@ -41,3 +41,9 @@ stages:
     - script: dotnet test --configuration Release
       displayName: dotnet test
       workingDirectory: $(workingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
