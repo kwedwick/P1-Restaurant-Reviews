@@ -18,19 +18,20 @@ variables:
   solution: '*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  workingDirectory: 'P1RestaurantReviewer'
 
 stages:
 - stage: build
   jobs:
   - job: build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: 'windows-latest'
     steps:
 
     - script: dotnet build --configuration Release
       displayName: dotnet build
-      workingDirectory: $(solution)
+      workingDirectory: $(workingDirectory)
 
     - script: dotnet test --configuration Release
       displayName: dotnet test
-      workingDirectory: $(solution)
+      workingDirectory: $(workingDirectory)
