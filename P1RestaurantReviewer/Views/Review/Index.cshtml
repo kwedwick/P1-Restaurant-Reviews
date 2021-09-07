@@ -9,12 +9,16 @@
 
 <p><a class="btn btn-primary" asp-controller="User" asp-action="Index" role="button">See your reviews &raquo;</a></p>
 
+<form asp-controller="Review" asp-action="Index" method="get">
+    <p>
+        Search by Restaurant <input type="text" name="SearchString" method="get" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -37,9 +41,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>

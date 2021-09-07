@@ -20,9 +20,17 @@ namespace P1RestaurantReviewer.Controllers
             _repo = repo;
         }
         // GET: ReviewController
-        public ActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            return View(_repo.GetAllReviews());
+            IEnumerable <Review> allReviews = _repo.GetAllReviews();
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allReviews = allReviews.Where(s => s.RestaurantName.Contains(searchString));
+            }
+
+            return View(allReviews);
         }
 
         // GET: ReviewController/Details/5
