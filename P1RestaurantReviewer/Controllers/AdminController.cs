@@ -31,9 +31,17 @@ namespace P1RestaurantReviewer.Controllers
         }
         public string ReturnUrl { get; set; }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            return View(_userManager.Users);
+            IEnumerable <IdentityUser> allUsers = _userManager.Users;
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allUsers = allUsers.Where(s => s.UserName.Contains(searchString));
+            }
+
+            return View(allUsers);
         }
 
         public ViewResult Create() => View();
