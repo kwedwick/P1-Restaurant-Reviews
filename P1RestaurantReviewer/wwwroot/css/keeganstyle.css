@@ -1,0 +1,68 @@
+﻿:root {
+    --primary: blanchedalmond;
+    --secondary: slateblue;
+    --tertiary: #fff;
+    --quaternary: #faf8fc;
+    --hover: rgb(34, 119, 71);
+    --boxshadow: grey;
+}
+
+body {
+    background-color: lightgray;
+}
+
+header {
+    background-color: var(--secondary);
+}
+
+main {
+    height:500px;
+}
+
+.jumbotron {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+}
+
+.jumbotronButton {
+    background-color: var(--tertiary);
+}
+.content-header {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+    padding: 20px;
+    border-radius: 25px;
+}
+
+.card {
+    border-radius: 25px;
+}
+
+th {
+    background-color: var(--tertiary);
+
+}
+
+tr {
+    border-radius: 25px;
+}
+tr:nth-child(even) {
+    background-color: var(--tertiary);
+}
+
+.restaurant-review-list {
+    border-radius: 25px;
+    padding: 5px;
+    
+}
+.restaurant-review-list:nth-child(odd) {
+    background-color: var(--tertiary);
+}
+.restaurant-review-list:nth-child(even) {
+    background-color: var(--quaternary);
+}
+
+footer {
+
+    background-color: var(--quaternary);
+}
