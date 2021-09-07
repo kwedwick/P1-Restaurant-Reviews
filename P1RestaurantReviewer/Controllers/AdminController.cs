@@ -52,6 +52,7 @@ namespace P1RestaurantReviewer.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)

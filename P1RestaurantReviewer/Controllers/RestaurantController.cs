@@ -272,7 +272,7 @@ namespace P1RestaurantReviewer.Controllers
         /// <param name="id"></param>
         /// <param name="restaurant"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Delete(int id, Restaurant restaurant)
