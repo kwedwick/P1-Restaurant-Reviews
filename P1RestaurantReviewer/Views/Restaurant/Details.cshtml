@@ -1,5 +1,6 @@
 ﻿@model P1RestaurantReviewer.Domain.Restaurant
-
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> SignInManager;
 @{
     ViewData["Title"] = "Details";
 }
@@ -55,8 +56,15 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Write Review", "WriteReview", new { id = Model.Id }) |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Write Review", "WriteReview", new { id = Model.Id })
+
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+    {
+        @Html.DisplayName(" | ")
+
+
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    } |
     <a asp-action="Index">Back to List</a>
 
 
