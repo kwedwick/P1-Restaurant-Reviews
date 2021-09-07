@@ -15,10 +15,6 @@ header {
     background-color: var(--secondary);
 }
 
-main {
-    height:500px;
-}
-
 .jumbotron {
     background-color: var(--secondary);
     color: var(--tertiary);
@@ -63,6 +59,5 @@ tr:nth-child(even) {
 }
 
 footer {
-
     background-color: var(--quaternary);
 }

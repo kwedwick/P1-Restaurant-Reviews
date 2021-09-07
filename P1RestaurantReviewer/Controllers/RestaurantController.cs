@@ -164,6 +164,7 @@ namespace P1RestaurantReviewer.Controllers
         public ActionResult Edit(int id)
         {
             Restaurant foundRestaurant = _repo.GetRestaurantById(id);
+            foundRestaurant.Reviews = _reviewRepo.GetReviewsbyRestaurantId(id);
             if (foundRestaurant != null)
                 return View(foundRestaurant);
             else
@@ -189,7 +190,7 @@ namespace P1RestaurantReviewer.Controllers
             try
             {
                 Restaurant updatedRestaurant = _repo.UpdateRestaurant(id, restaurant);
-                return View("Details", updatedRestaurant);
+                return RedirectToAction(nameof(Details), new { id = updatedRestaurant.Id });
             }
             catch
             {
