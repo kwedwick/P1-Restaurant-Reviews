@@ -1,6 +1,8 @@
 # P1 ASP.NET Core + Identity C# Restaurant Reviewer
 ## Description
 This is an MVC Restaurant Review application that utilizing Microsoft Identity deployed through Azure Web Services. Users are able to view all restaurants, CRUD their reviews, and search restaurants by name. 
+
+Deployed Website [here](http://restaurant-reviewer-kw.azurewebsites.net)
     
 ## Table of Contents 
 * [Installation](#Installation) 
@@ -32,9 +34,9 @@ This project falls under the mit license. Please visit [mit](https://choosealice
 - SonarCloud
 
 ## ER Diagram
-![P0 Tables](./assets/P0%20ER%20Diagram.png)
+![P1 Tables](./assets/P0%20ER%20Diagram.png)
 ## Contribution
-I'd like to thank my groupmates Du Tran, Andrew Carson, and Mariah McMurren for their encouragement!
+I'd like to thank Du T. and Jorge Y.!
 
 ## Test
 This application uses Unix Testing. Simply navigate to the Tests folder and use 'dotnet test'.
