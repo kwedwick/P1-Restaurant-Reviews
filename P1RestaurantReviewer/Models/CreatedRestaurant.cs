@@ -23,6 +23,7 @@ namespace P1RestaurantReviewer.Models
 
         [Required]
         [DataType(DataType.PostalCode)]
+        [Range(5, 10)]
         [DisplayName("Zip code")]
         public int ZipCode { get; set; }
 

@@ -25,7 +25,13 @@ namespace P1RestaurantReviewer.Services
             // We want to know if googleSMTPDetails is null so we throw an exception if it is           
             _googleSMTPDetails = googleSMTPDetails.Value ?? throw new ArgumentException(nameof(googleSMTPDetails));
         }
-
+        /// <summary>
+        /// Collects user info and sends them the confirmation email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="subject"></param>
+        /// <param name="htmlMessage"></param>
+        /// <returns></returns>
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             using (var message = new MailMessage())

@@ -35,6 +35,9 @@ stages:
         scannerMode: 'MSBuild'
         projectKey: 'kwedwick_P1-Restaurant-Reviews'
         projectName: 'P1-Restaurant-Reviews'
+        extraProperties: |
+          sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/*/coverage.opencover.xml
+
     - task: VSBuild@1
       inputs:
         solution: '$(solution)'
@@ -42,7 +45,12 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-    - script: dotnet test --configuration Release
+    - script: dotnet test
+        --configuration Release
+        --collect:"XPlat Code Coverage"
+        --results-directory $(Agent.TempDirectory)
+        --
+        DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
       displayName: dotnet test
       workingDirectory: $(workingDirectory)
     
