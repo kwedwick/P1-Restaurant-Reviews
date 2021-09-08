@@ -42,10 +42,9 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-    - task: VSTest@2
-      inputs:
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+    - script: dotnet test --configuration Release
+      displayName: dotnet test
+      workingDirectory: $(workingDirectory)
     
     - task: SonarCloudAnalyze@1
       displayName: 'Run SonarCloud analysis'
