@@ -15,23 +15,25 @@
 
     <div class="container">
         <h2>A few restaurants to start you off...</h2>
-    <br/>
-        <div class="row align-items-center">
+        <br />
+        <div class="row">
             @foreach (var item in Model)
             {
-                <div class="col-md-3 m-3 card">
+            <div class="col-lg-4">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3 card">
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">Location: @item.Location</p>
-                        <p class="card-text">Zip code: @item.ZipCode</p>
+                        <p class="card-text">@item.Location, @item.ZipCode</p>
                         <p>
                             <a class="btn btn-secondary" asp-controller="Restaurant" asp-action="Details" asp-route-id="@item.Id">
                                 View details &raquo;
                             </a>
                         </p>
                     </div>
-                    
+
                 </div>
+            </div>
+               
             }
 
         </div>
@@ -39,5 +41,37 @@
         <hr>
 
     </div>
+    <section class="testimonials text-center bg-light">
+        <div class="container">
+            <h2 class="mb-5">What people are saying...</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <img class="img-fluid rounded-circle mb-3" src="~/images/homepage-man1.jpg" alt="..." />
+                        <a href='https://www.freepik.com/photos/people'>freepik</a>
+                        <h5>John S.</h5>
+                        <p class="font-weight-light mb-0">"This website has helped me choose a great restaurant!"</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <img class="img-fluid rounded-circle mb-3" src="~/images/homepage-woman1.jpg" alt="..." />
+                        <a href='https://www.freepik.com/photos/people'>freepik</a>
+                        <h5>Elizabeth L.</h5>
+                        <p class="font-weight-light mb-0">"Without Restaurant Reviewer, I'd be starving!'."</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+
+                        <img class="img-fluid rounded-circle mb-3" src="~/images/homepage-man2.jpg" alt="..." />
+                        <a href='https://www.freepik.com/photos/background'>freepik</a>
+                        <h5>Guy M.</h5>
+                        <p class="font-weight-light mb-0">"This website saved my marriage!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </main>
