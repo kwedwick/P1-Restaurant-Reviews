@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using P1RestaurantReviewer.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,15 @@ namespace P1RestaurantReviewer.Controllers
     public class ReviewController : Controller
     {
         private readonly IReviewRepo _repo;
+        private readonly ILogger<ReviewController> _logger;
 
-        public ReviewController(IReviewRepo repo)
+        public ReviewController(IReviewRepo repo, ILogger<ReviewController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
         // GET: ReviewController
+        [HttpGet]
         public IActionResult Index(string searchString)
         {
             IEnumerable <Review> allReviews = _repo.GetAllReviews();
@@ -34,9 +38,19 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         // GET: ReviewController/Details/5
+        [HttpGet]
         public ActionResult Details(int id)
         {
-            return View(_repo.GetReviewById(id));
+            try
+            {
+                Review singleReview = _repo.GetReviewById(id);
+                return View(singleReview);
+
+            } catch (InvalidOperationException e)
+            {
+                _logger.LogCritical(e, $"Unable to get Details of review id: {id}");
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: ReviewController/Edit/5
@@ -44,16 +58,25 @@ namespace P1RestaurantReviewer.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            Review foundReview = _repo.GetReviewById(id);
-            if (foundReview != null)
-                return View(foundReview);
-            else
+            try
+            {
+                Review foundReview = _repo.GetReviewById(id);
+                if (foundReview != null)
+                    return View(foundReview);
+                else
+                    return RedirectToAction("Index");
+            } catch (InvalidOperationException e)
+            {
+                _logger.LogCritical(e, $"Unable to see (not submit) EDIT REVIEW of review id: {id}");
                 return RedirectToAction("Index");
+            }
+            
         }
 
 
         // POST: ReviewController/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Required] Review review)
         {
@@ -66,29 +89,39 @@ namespace P1RestaurantReviewer.Controllers
                 Review updatedReview = _repo.UpdateReview(id, review);
                 return View("Details", updatedReview);
             }
-            catch
+            catch (InvalidOperationException e)
             {
-                return View();
+                _logger.LogCritical(e, $"Unable to submit EDIT REVIEW of review id: {id}");
+                return RedirectToAction("Index");
             }
         }
 
         // GET: ReviewController/Delete/5
+        [HttpGet]
+        [Authorize(Roles = "Administrator, Manager")]
         public ActionResult Delete(int id)
         {
-            return View();
+            Review foundReview = _repo.GetReviewById(id);
+            if (foundReview != null)
+                return View(foundReview);
+            else
+                return RedirectToAction("Index");
         }
 
         // POST: ReviewController/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Administrator, Manager")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Review review)
         {
             try
             {
+                var deletedReview = _repo.DeleteReviewById(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogCritical(e, $"Unable to delete review/delete id: {id}");
                 return View();
             }
         }

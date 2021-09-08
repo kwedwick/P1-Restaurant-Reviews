@@ -11,6 +11,7 @@ using P1RestaurantReviewer.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace P1RestaurantReviewer.Controllers
 {
@@ -22,12 +23,15 @@ namespace P1RestaurantReviewer.Controllers
     {
         private UserManager<IdentityUser> _userManager;
 
+        private ILogger<AdminController> _logger;
+
         private IPasswordHasher<IdentityUser> _passwordHasher;
 
-        public AdminController(UserManager<IdentityUser> usrMgr, IPasswordHasher<IdentityUser> passwordHash)
+        public AdminController(UserManager<IdentityUser> usrMgr, IPasswordHasher<IdentityUser> passwordHash, ILogger<AdminController> logger)
         {
             _userManager = usrMgr;
             _passwordHasher = passwordHash;
+            _logger = logger;
         }
         public string ReturnUrl { get; set; }
 
@@ -85,11 +89,19 @@ namespace P1RestaurantReviewer.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Update(string id)
         {
-            IdentityUser user = await _userManager.FindByIdAsync(id);
-            if (user != null)
-                return View(user);
-            else
-                return RedirectToAction("Index");
+            try
+            {
+                IdentityUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                    return View(user);
+                else
+                    return RedirectToAction("Index");
+            } catch (Exception e)
+            {
+                _logger.LogError(e, "Unable to add new user");
+            }
+            return View();
+            
         }
         /// <summary>
         /// This updates the User if they are found with the id, email and password
@@ -131,6 +143,8 @@ namespace P1RestaurantReviewer.Controllers
             }
             else
                 ModelState.AddModelError("", "User Not Found");
+                _logger.LogDebug($"User was not found under admin/update with id: {id}");
+                
             return View(user);
         }
         /// <summary>
@@ -146,12 +160,17 @@ namespace P1RestaurantReviewer.Controllers
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
+                {
+                    _logger.LogInformation("Admin has deleted user");
                     return RedirectToAction("Index");
+                }
+                    
                 else
                     Errors(result);
             }
             else
                 ModelState.AddModelError("", "User Not Found");
+            _logger.LogDebug($"Admin tried to delete user {id} but was not found");
             return View("Index", _userManager.Users);
         }
 

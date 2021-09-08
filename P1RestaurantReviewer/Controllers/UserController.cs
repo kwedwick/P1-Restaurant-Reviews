@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using P1RestaurantReviewer.Domain;
 using System;
 using System.Collections.Generic;
@@ -16,20 +17,30 @@ namespace P1RestaurantReviewer.Controllers
     {
         private readonly IReviewRepo _reviewRepo;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<UserController> _logger;
         private string userId;
 
-        public UserController(IReviewRepo repo, UserManager<IdentityUser> usrMngr)
+        public UserController(IReviewRepo repo, UserManager<IdentityUser> usrMngr, ILogger<UserController> logger)
         {
             _reviewRepo = repo;
             _userManager = usrMngr;
+            _logger = logger;
         }
         // GET: UserController
         [Authorize]
         public ActionResult Index()
         {
-            userId = _userManager.GetUserId(User);
+            try
+            {
+                userId = _userManager.GetUserId(User);
 
-            return View(_reviewRepo.GetMyReviews(userId));
+                return View(_reviewRepo.GetMyReviews(userId));
+            } catch (InvalidOperationException e)
+            {
+                _logger.LogError(e, $"Unable to find user reviews");
+                return View();
+            }
+           
         }
 
         // GET: UserController/Details/5
@@ -67,11 +78,25 @@ namespace P1RestaurantReviewer.Controllers
         [HttpGet]
         public ActionResult EditReview(int id)
         {
-            Review foundReview = _reviewRepo.GetReviewById(id);
-            if (foundReview != null)
-                return View(foundReview);
-            else
+
+            try
+            {
+                Review foundReview = _reviewRepo.GetReviewById(id);
+                if (foundReview != null)
+                    return View(foundReview);
+                else
+                {
+                    _logger.LogError($"Unable to find user's review: {id}");
+                    return RedirectToAction("Index");
+                }
+                    
+            } catch
+            {
+                _logger.LogCritical($"Encountered critical failure trying to get user review {id} to edit");
                 return RedirectToAction("Index");
+            }
+            
+
         }
 
         // POST: UserController/Edit/5
@@ -87,6 +112,7 @@ namespace P1RestaurantReviewer.Controllers
             try
             {
                 Review updatedReview = _reviewRepo.UpdateReview(id, review);
+                _logger.LogInformation($"User has successfully updated their own review: {id}");
                 return View("ReviewDetails", updatedReview);
             }
             catch
@@ -116,10 +142,12 @@ namespace P1RestaurantReviewer.Controllers
             try
             {
                 var deletedReview = _reviewRepo.DeleteReviewById(id);
+                _logger.LogInformation($"User has deleted their review id: {id}");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                _logger.LogError($"User was unable to delete their review: {id}");
                 return View();
             }
         }

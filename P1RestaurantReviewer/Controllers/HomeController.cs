@@ -21,24 +21,26 @@ namespace P1RestaurantReviewer.Controllers
         }
 
         
-        
+        /// <summary>
+        /// Home page of website
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             var random = new Random();
             var list = _repo.GetAllRestaurants();
-            var randomList = list.OrderBy(x => random.Next(3));
+            var randomList = list.OrderBy(x => random.NextDouble()).Take(3);
             return View(randomList);
         }
-
+        /// <summary>
+        /// Privacy policy page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
-        public IActionResult Restaurants()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
