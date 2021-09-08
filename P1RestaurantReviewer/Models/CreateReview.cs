@@ -12,7 +12,7 @@ namespace P1RestaurantReviewer.Models
     public class CreateReview
     { 
         public CreateReview() { }
-        public CreateReview(string title, string body, int rating, int userId, int restaurantId) : this()
+        public CreateReview(string title, string body, int rating, string userId, int restaurantId) : this()
         {
             Title = title;
             Body = body;
@@ -20,7 +20,7 @@ namespace P1RestaurantReviewer.Models
             UserId = userId;
             RestaurantId = restaurantId;
         }
-        public CreateReview(int id, string title, string body, int rating, int userId, int restaurantId) : this()
+        public CreateReview(int id, string title, string body, int rating, string userId, int restaurantId) : this()
         {
             Id = id;
             Title = title;
@@ -43,7 +43,7 @@ namespace P1RestaurantReviewer.Models
         [Required]
         [Range(1, 5)]
         public int Rating { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public int RestaurantId { get; set; }
     }
