@@ -28,13 +28,25 @@ This project falls under the mit license. Please visit [mit](https://choosealice
 - SQLServer DB
 - EF Core 
 - Serilog
-- Microsoft Identity
+- Microsoft ASP.NET Core Identity
 - Azure Web Services
 - Azure Dev Ops
 - SonarCloud
 
 ## ER Diagram
-![P1 Tables](./assets/P0%20ER%20Diagram.png)
+![P1 Tables](./assets/P1-ER-Diagram.png)
+
+- **ReviewJoin:** links Reviews/Restaurants/Users together
+- **Reviews:** holds individual reviews
+- **Restaurant:** holds restaurant information
+- **AspNetRoleClaims:** holds claims assigned to a specific role.
+- **AspNetRoles:** holds a list of roles. It is a lookup table of all possible roles that exist and can be assigned to a user.
+- **AspNetUserClaims:** holds claims assigned to a user. A claim is different from a role because a claim is a key-value pair. You can have a role or not have a role. Claim also provides a value for a specified claim.
+- **AspNetUserLogins:** connects external users to local users. All users specified in *AspNetUsers* table are local users. Say you want to login with Google and you want to link your Google account with your local account. This table holds that link so once you are linked you don’t have to go through the linking process again.
+- **AspNetUserRoles:** it's a many-to-many relationship table that connects users with assigned roles.
+- **AspNetUsers:** holds users. All of the user properties like username, email, password are stored here. We can also add custom user properties here to extend the user.
+- **AspNetUserTokens:** holds external authentication tokens. This table is also used for keeping TOTP authenticator keys and recovery codes for user.
+
 ## Contribution
 I'd like to thank Du T. and Jorge Y.!
 
